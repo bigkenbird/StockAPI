@@ -7,8 +7,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.stockAPI.filter.JWTCheckFilter;
 import com.stockAPI.service.StockUserService;
 
 @EnableWebSecurity
@@ -16,6 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	StockUserService stockUserService;
+	
+	@Autowired
+	JWTCheckFilter jWTCheckFilter;
 	
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -28,10 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http
     		.authorizeRequests()
+    		.antMatchers("/user/create").hasAuthority("ADMIN") //管理員可以新增使用者資料
     		.antMatchers("/user/testUnblock").permitAll()
     		.antMatchers("/user/login").permitAll()
-    		.antMatchers("/user/create").hasAuthority("ADMIN") //管理員可以新增使用者資料
     		.antMatchers("/user/search/**").permitAll() //大家都可以查詢資料
+    		.and()
+    		.addFilterBefore(jWTCheckFilter, UsernamePasswordAuthenticationFilter.class)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     		.and()
     		.csrf().disable();
         

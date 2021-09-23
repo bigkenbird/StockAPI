@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.stockAPI.model.StockUser;
@@ -41,11 +41,12 @@ public class JWTService {
 		claims.put("user_id", stockUser.getUser().getId());
 		claims.put("account", stockUser.getUsername());
 		claims.put("name", stockUser.getUser().getName());
+		claims.put("authority", stockUser.getUser().getAuthority());
 		claims.setExpiration(calendar.getTime());
-		claims.setIssuer("Programming Classroom");
+		claims.setIssuer("KensStockAPI");
 
 		Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
-
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return Jwts.builder().setClaims(claims).signWith(secretKey).compact();
 	}
 	

@@ -26,6 +26,7 @@ public class User {
 		this.account=account;
 		this.name=name;
 		this.password=password;
+		this.authority=authority;
 	}
 
 }
