@@ -15,8 +15,14 @@ public class User {
 	
 	private String password;
 	
+	private String authority;
 	
-	public User(String account,String name,String password) {
+	public User() {
+		
+	}
+	
+	
+	public User(String account,String name,String password,String authority) {
 		this.account=account;
 		this.name=name;
 		this.password=password;

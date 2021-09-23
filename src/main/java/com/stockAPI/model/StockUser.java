@@ -1,10 +1,12 @@
 package com.stockAPI.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +26,12 @@ public class StockUser implements UserDetails {
 	}
 	
 
-	//取得此帳號的權限，目前先給空陣列
+	//取得此帳號的權限
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList();
+		List<SimpleGrantedAuthority> authority_list = new ArrayList<SimpleGrantedAuthority>();
+		authority_list.add(new SimpleGrantedAuthority(user.getAuthority()));
+		return authority_list;
 	}
 
 	@Override

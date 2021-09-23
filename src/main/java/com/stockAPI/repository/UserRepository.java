@@ -24,8 +24,8 @@ public class UserRepository {
 	public Integer add(User user) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		SqlParameterSource sqlParameterSource=new BeanPropertySqlParameterSource(user);
-		String sql = " INSERT INTO stockapi.users ( ACCOUNT, NAME, PASSWORD ) "
-				   + " VALUE ( :account, :name, :password ) " ;
+		String sql = " INSERT INTO stockapi.users ( ACCOUNT, NAME, PASSWORD, AUTHORITY ) "
+				   + " VALUE ( :account, :name, :password, :authority ) " ;
 		namedParameterJdbcTemplate.update(sql, sqlParameterSource,keyHolder);
 		return keyHolder.getKey().intValue();
 	}
