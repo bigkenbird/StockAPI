@@ -34,10 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http
     		.authorizeRequests()
-    		.antMatchers("/user/create").hasAuthority("ADMIN") //管理員可以新增使用者資料
+    		.antMatchers("/user/create").permitAll() //管理員可以新增使用者資料
     		.antMatchers("/user/testUnblock").permitAll()
     		.antMatchers("/user/login").permitAll()
-    		.antMatchers("/user/search/**").permitAll() //大家都可以查詢資料
+    		.antMatchers("/user/search/**").hasAnyAuthority("NORMAL","ADMIN") //取得用戶資料
+    		.antMatchers("/user/stock/**").hasAnyAuthority("NORMAL","ADMIN") //取得股市資料
     		.and()
     		.addFilterBefore(jWTCheckFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement()
