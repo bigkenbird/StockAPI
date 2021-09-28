@@ -2,6 +2,7 @@ package com.stockAPI.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,11 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http
     		.authorizeRequests()
-    		.antMatchers("/user/create").permitAll() //管理員可以新增使用者資料
-    		.antMatchers("/user/testUnblock").permitAll()
+    		.antMatchers("/user/create").hasAuthority("ADMIN") //管理員可以新增使用者資料
     		.antMatchers("/user/login").permitAll()
-    		.antMatchers("/user/search/**").hasAnyAuthority("NORMAL","ADMIN") //取得用戶資料
-    		.antMatchers("/user/stock/**").hasAnyAuthority("NORMAL","ADMIN") //取得股市資料
+    		.antMatchers("/user/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得用戶資料
+    		.antMatchers("/stock/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得股市資料
     		.and()
     		.addFilterBefore(jWTCheckFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement()

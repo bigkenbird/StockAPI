@@ -1,5 +1,9 @@
 package com.stockAPI.model;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -26,6 +30,9 @@ public class DailyTranctionStockData {
 //		  "Transaction": "string" //成交筆數
 //		}
 	
+	private Integer id;
+	private Timestamp create_time;
+	
 	@JsonProperty(value="Code")
 	private String code;
 	
@@ -33,47 +40,52 @@ public class DailyTranctionStockData {
 	private String name;
 	
 	@JsonProperty(value="TradeVolume")
-	private String tradevolume;
+	private Integer trade_volume;
 	
 	@JsonProperty(value="TradeValue")
-	private String tradevalue;
+	private BigInteger trade_value;
 	
 	@JsonProperty(value="OpeningPrice")
-	private String openingprice;
+	private BigDecimal opening_price;
 	
 	@JsonProperty(value="HighestPrice")
-	private String highestprice;
+	private BigDecimal highest_price;
 	
 	@JsonProperty(value="LowestPrice")
-	private String lowestprice;
+	private BigDecimal lowest_price;
 	
 	@JsonProperty(value="ClosingPrice")
-	private String closingprice;
+	private BigDecimal closing_price;
 	
 	@JsonProperty(value="Change")
-	private String change;
+	private BigDecimal change_gap;
 	
 	@JsonProperty(value="Transaction")
-	private String transaction;
+	private Integer transaction_count;
 	
 	public DailyTranctionStockData() {
 		
 	}
 
-	public DailyTranctionStockData(String code, String name, String tradevolume, String tradevalue, String openingprice,
-			String highestprice, String lowestprice, String closingprice, String change, String transaction) {
+	public DailyTranctionStockData(String code, String name, Integer trade_volume, BigInteger trade_value,
+			BigDecimal opening_price, BigDecimal highest_price, BigDecimal lowest_price, BigDecimal closing_price,
+			BigDecimal change_gap, Integer transaction_count) {
 		super();
 		this.code = code;
 		this.name = name;
-		this.tradevolume = tradevolume;
-		this.tradevalue = tradevalue;
-		this.openingprice = openingprice;
-		this.highestprice = highestprice;
-		this.lowestprice = lowestprice;
-		this.closingprice = closingprice;
-		this.change = change;
-		this.transaction = transaction;
+		this.trade_volume = trade_volume;
+		this.trade_value = trade_value;
+		this.opening_price = opening_price;
+		this.highest_price = highest_price;
+		this.lowest_price = lowest_price;
+		this.closing_price = closing_price;
+		this.change_gap = change_gap;
+		this.transaction_count = transaction_count;
 	}
+
+	
+
+	
 	
 	
 }

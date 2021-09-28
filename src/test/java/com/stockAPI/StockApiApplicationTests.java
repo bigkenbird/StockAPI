@@ -20,14 +20,7 @@ class StockApiApplicationTests {
 	@Test
 	void contextLoads() {
 		
-	DailyTranctionStockData[] resultArray =tWSIOpenService.getDailyTranctionStockData();
-	 if(resultArray!=null) {
-		 for(DailyTranctionStockData data:resultArray) {
-			 System.out.println("code:"+data.getCode());
-		 }
-	 }
-	 else {
-		 logger.error("資料取得失敗");
-	 }
-	}
+		tWSIOpenService.schedule_AddDailyTranctionStockData();
+	 
+}
 }
