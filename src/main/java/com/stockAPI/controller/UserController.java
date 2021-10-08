@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +33,13 @@ public class UserController {
 		return "testBlock";
 	}
 	
+	@CrossOrigin(origins = "*", maxAge = 3600)
 	@GetMapping("testUnblock")
 	public String testUnblock() {
 		return "testUnblock";
 	}
 	
+	@CrossOrigin(origins = "*", maxAge = 3600)
 	@PostMapping("login")
 	public APIReturnObject login(@RequestBody User user) {
 		APIReturnObject result = new APIReturnObject();
