@@ -5,8 +5,11 @@ import org.springframework.http.HttpMethod;
 public enum TWSIOpenAPIUrl {
 	
 	//證卷交易(exchangeReport)
-	EXCHANGE_REPORT_STOCK_DAY_ALL(1,"exchange_report",HttpMethod.GET,"https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL");
+	EXCHANGE_REPORT_STOCK_DAY_ALL(1,"exchange_report",HttpMethod.GET,"https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"),
 	
+	
+	//財務報表
+	FINANCE_GENERAL_BALANCE_SHEET(1,"finance",HttpMethod.GET,"https://openapi.twse.com.tw/v1/opendata/t187ap07_X_ci");
 	
 	private  Integer id;
 	private String type;

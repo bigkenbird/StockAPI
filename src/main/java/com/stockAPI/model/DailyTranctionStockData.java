@@ -6,13 +6,17 @@ import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class DailyTranctionStockData {
 	
 	//上市個股日成交資訊
@@ -62,30 +66,6 @@ public class DailyTranctionStockData {
 	
 	@JsonProperty(value="Transaction")
 	private Integer transaction_count;
-	
-	public DailyTranctionStockData() {
-		
-	}
-
-	public DailyTranctionStockData(String code, String name, Integer trade_volume, BigInteger trade_value,
-			BigDecimal opening_price, BigDecimal highest_price, BigDecimal lowest_price, BigDecimal closing_price,
-			BigDecimal change_gap, Integer transaction_count) {
-		super();
-		this.code = code;
-		this.name = name;
-		this.trade_volume = trade_volume;
-		this.trade_value = trade_value;
-		this.opening_price = opening_price;
-		this.highest_price = highest_price;
-		this.lowest_price = lowest_price;
-		this.closing_price = closing_price;
-		this.change_gap = change_gap;
-		this.transaction_count = transaction_count;
-	}
-
-	
-
-	
 	
 	
 }

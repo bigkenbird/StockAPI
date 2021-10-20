@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
+import com.stockAPI.service.ScheduleService;
 import com.stockAPI.service.TWSIOpenService;
 
 @SpringBootTest
@@ -15,11 +17,20 @@ class StockApiApplicationTests {
 	
 	@Autowired
 	TWSIOpenService tWSIOpenService;
+	
+	@Autowired
+	ScheduleService scheduleService;
 
+	
+	void schedule_AddDailyTranctionStockData() {
+		scheduleService.schedule_AddDailyTranctionStockData();
+		}
+	
 	@Test
-	void contextLoads() {
-		
-		tWSIOpenService.schedule_AddDailyTranctionStockData();
-	 
-}
+	void getGeneralBalanceSheet() {
+		GeneralBalanceSheet[]  resultList = tWSIOpenService.getGeneralBalanceSheet();
+		for(GeneralBalanceSheet result:resultList) {
+			System.out.println(result);
+		}
+		}
 }

@@ -20,6 +20,7 @@ import com.stockAPI.service.StockUserService;
 
 @RestController
 @RequestMapping("user")
+@CrossOrigin("*")
 public class UserController {
 	
 	@Autowired
@@ -33,13 +34,13 @@ public class UserController {
 		return "testBlock";
 	}
 	
-	@CrossOrigin(origins = "*", maxAge = 3600)
+	
 	@GetMapping("testUnblock")
 	public String testUnblock() {
 		return "testUnblock";
 	}
 	
-	@CrossOrigin(origins = "*", maxAge = 3600)
+	
 	@PostMapping("login")
 	public APIReturnObject login(@RequestBody User user) {
 		APIReturnObject result = new APIReturnObject();

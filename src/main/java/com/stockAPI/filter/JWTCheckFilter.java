@@ -31,6 +31,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+		System.out.println("authHeader:"+authHeader);
 	    if (authHeader != null) {
 	        String accessToken = authHeader.replace("Bearer ", "");
 
