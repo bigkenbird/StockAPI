@@ -38,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.antMatchers("/user/login").permitAll()
     		.antMatchers("/user/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得用戶資料
     		.antMatchers("/stock/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得股市資料
-//    		.antMatchers("/stock/search/**").permitAll() //取得股市資料
     		.and()
     		.addFilterBefore(jWTCheckFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement()
