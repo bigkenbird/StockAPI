@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,20 +14,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.stockAPI.enumsave.TokenEnum;
-import com.stockAPI.exception.TokenException;
 import com.stockAPI.model.StockUser;
 import com.stockAPI.model.User;
 import com.stockAPI.service.JWTService;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTServiceImpl implements JWTService {
+	
+	static Logger logger = LogManager.getLogger();
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -56,26 +57,16 @@ public class JWTServiceImpl implements JWTService {
 	}
 	
 	 public Map<String, Object> parseToken(String token) {
-	        Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
+			 Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
 
-	        JwtParser parser = Jwts.parserBuilder()
-	                .setSigningKey(secretKey)
-	                .build();
-	        try {
-	        	 Claims claims = parser
-	 	                .parseClaimsJws(token)
-	 	                .getBody();
-	        	 return claims.entrySet().stream()
-	 	                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-	        }
-	        catch (ExpiredJwtException e) {
-				throw new TokenException(TokenEnum.TOKEN_ERROR_EXPIRED.getCode(),
-						TokenEnum.TOKEN_ERROR_EXPIRED.getMessage(),
-						TokenEnum.TOKEN_ERROR_EXPIRED.getHttpstatus());
-			}
-	       
-	        
-	       
-	    }
-	
+		        JwtParser parser = Jwts.parserBuilder()
+		                .setSigningKey(secretKey)
+		                .build();
+		       
+		        	 Claims claims = parser
+		 	                .parseClaimsJws(token)
+		 	                .getBody();
+		        	 return claims.entrySet().stream()
+		 	                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); 
+		 }
 }

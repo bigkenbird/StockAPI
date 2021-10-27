@@ -17,43 +17,40 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 @RestControllerAdvice
 public class BaseHandler {
-	
-	static Logger logger=LogManager.getLogger();
-	
-	//登入驗證錯誤
+
+	static Logger logger = LogManager.getLogger();
+
+	// 登入驗證錯誤
 	@ExceptionHandler(UsernameNotFoundException.class)
-	public ResponseEntity<APIReturnObject> usernameNotFoundException(UsernameNotFoundException e){
+	public ResponseEntity<APIReturnObject> usernameNotFoundException(UsernameNotFoundException e) {
 		APIReturnObject aPIReturnObject = new APIReturnObject();
 		aPIReturnObject.setMessage(e.getMessage());
-		return new ResponseEntity<APIReturnObject>(aPIReturnObject,HttpStatus.FORBIDDEN);
+		return new ResponseEntity<APIReturnObject>(aPIReturnObject, HttpStatus.FORBIDDEN);
 	}
-	
+
 	// token過期
 	@ExceptionHandler(ExpiredJwtException.class)
-	public ResponseEntity<APIReturnObject> expiredJwtException(ExpiredJwtException e){
+	public ResponseEntity<APIReturnObject> expiredJwtException(ExpiredJwtException e) {
 		APIReturnObject aPIReturnObject = new APIReturnObject();
-		aPIReturnObject.setMessage(e.getMessage());
-		return new ResponseEntity<APIReturnObject>(aPIReturnObject,HttpStatus.REQUEST_TIMEOUT);
+		aPIReturnObject.setMessage(TokenEnum.TOKEN_ERROR_EXPIRED.getMessage());
+		return new ResponseEntity<APIReturnObject>(aPIReturnObject, HttpStatus.REQUEST_TIMEOUT);
 	}
-	
+
 	// 身分驗證有誤
-		@ExceptionHandler(AuthenticationException.class)
-		public ResponseEntity<APIReturnObject> AuthenticationException(AuthenticationException e){
-			logger.error(e.getMessage());
-			APIReturnObject aPIReturnObject = new APIReturnObject();
-			aPIReturnObject.setMessage(TokenEnum.TOKEN_AUTH_FAIL.getMessage());
-			return new ResponseEntity<APIReturnObject>(aPIReturnObject,TokenEnum.TOKEN_AUTH_FAIL.getHttpstatus());
-		}
-	
-	
-	// token過期
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<APIReturnObject> AuthenticationException(AuthenticationException e) {
+		logger.error(e.getMessage());
+		APIReturnObject aPIReturnObject = new APIReturnObject();
+		aPIReturnObject.setMessage(TokenEnum.TOKEN_AUTH_FAIL.getMessage());
+		return new ResponseEntity<APIReturnObject>(aPIReturnObject, TokenEnum.TOKEN_AUTH_FAIL.getHttpstatus());
+	}
+
+	// token業務邏輯錯誤
 	@ExceptionHandler(TokenException.class)
-	public ResponseEntity<APIReturnObject> tokenException(TokenException e){
+	public ResponseEntity<APIReturnObject> tokenException(TokenException e) {
 		APIReturnObject aPIReturnObject = new APIReturnObject();
 		aPIReturnObject.setMessage(e.getMessage());
-		return new ResponseEntity<APIReturnObject>(aPIReturnObject,e.getHttpStatus());
+		return new ResponseEntity<APIReturnObject>(aPIReturnObject, e.getHttpStatus());
 	}
-	
-	
 
 }
