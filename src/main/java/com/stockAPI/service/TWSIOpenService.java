@@ -8,7 +8,9 @@ import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
 @Service
 public interface TWSIOpenService {
 	
+	
 	public DailyTranctionStockData[] getDailyTranctionStockData();
+	
 	
 	
 	//財務報表
