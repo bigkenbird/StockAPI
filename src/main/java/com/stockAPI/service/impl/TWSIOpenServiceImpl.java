@@ -1,8 +1,10 @@
 package com.stockAPI.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -34,11 +36,16 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 				DailyTranctionStockData[].class);
 		
 		List<DailyTranctionStockData> api_resultList= BaseUtil.transArrayToList(api_resultArray);
+		Comparator<DailyTranctionStockData> comparator = (a,b) -> 
+		Optional.ofNullable(a).map(DailyTranctionStockData::getTrade_value).orElse(new BigInteger("0"))
+		.compareTo(Optional.ofNullable(b).map(DailyTranctionStockData::getTrade_value).orElse(new BigInteger("0")));
+				
 		
-		//刪除無交易金額的資料
-		api_resultList=api_resultList.stream().filter(element->element.getTrade_value()!=null).collect(Collectors.toList());
-		//根據成交金額進行排列(由大至小)
-		List<DailyTranctionStockData> api_resultList_sorted = api_resultList.stream().sorted(Comparator.comparing(DailyTranctionStockData::getTrade_value).reversed()).collect(Collectors.toCollection(ArrayList::new));
+		//刪除無交易金額的資料->根據成交金額進行排列(由大至小)
+		List<DailyTranctionStockData> api_resultList_sorted = 
+				api_resultList.stream().sorted(
+				comparator.reversed()
+				).collect(Collectors.toList());
 		DailyTranctionStockData[] resultArray = api_resultList_sorted.toArray(new DailyTranctionStockData[0]);
 		return	resultArray;
 	}
