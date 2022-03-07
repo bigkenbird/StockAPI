@@ -31,7 +31,7 @@ class StockApiApplicationTests {
 	void getDailyTranctionStockData() {
 		DailyTranctionStockData[]  resultList = tWSIOpenService.getDailyTranctionStockData();
 		for(DailyTranctionStockData result:resultList) {
-			logger.info(result.getTrade_value());
+			logger.info(result.getName());
 		}
 	}
 	
