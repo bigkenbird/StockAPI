@@ -1,6 +1,9 @@
 package com.stockAPI.service;
 
+import com.stockAPI.model.line_notify_api.LineNotify;
+
 public interface LineNotifyService {
 
-	public String getAccessToken();
+	public void notify(LineNotify lineNotify);
+	
 }
