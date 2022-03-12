@@ -7,6 +7,8 @@ public class FugleQuote {
 	
 	private String apiVersion;
 	
+	private FugleQuoteData data;
+	
 	
 
 }

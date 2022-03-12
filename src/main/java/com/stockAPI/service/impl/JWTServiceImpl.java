@@ -40,7 +40,7 @@ public class JWTServiceImpl implements JWTService {
 		authentication = authenticationManager.authenticate(authentication);
 		StockUser stockUser = (StockUser) authentication.getPrincipal();
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, 20);
+		calendar.add(Calendar.HOUR, 20);
 
 		Claims claims = Jwts.claims();
 		claims.put("user_id", stockUser.getUser().getId());

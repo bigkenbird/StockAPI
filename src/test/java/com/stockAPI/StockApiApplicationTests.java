@@ -8,7 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.stockAPI.model.DailyTranctionStockData;
 import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
-import com.stockAPI.model.line_notify_api.LineNotify;
+import com.stockAPI.model.fugle_api.quote.FugleQuote;
+import com.stockAPI.service.FugleQuoteService;
 import com.stockAPI.service.LineNotifyService;
 import com.stockAPI.service.ScheduleService;
 import com.stockAPI.service.TWSIOpenService;
@@ -26,6 +27,9 @@ public class StockApiApplicationTests {
 	
 	@Autowired
 	LineNotifyService lineNotifyService;
+	
+	@Autowired
+	FugleQuoteService fugleQuoteService;
 
 	
 	void schedule_AddDailyTranctionStockData() {
@@ -46,8 +50,8 @@ public class StockApiApplicationTests {
 		}
 	@Test
 	void LineNotify() {
-		LineNotify test = new LineNotify("test");
-		lineNotifyService.notify(test);
+		FugleQuote result =fugleQuoteService.getRealTimeData("2884", true);
+		logger.info(result);
 	}
 	
 }
