@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stockAPI.enumsave.TWSIOpenAPIUrl;
+import com.stockAPI.model.Bwibbu;
 import com.stockAPI.model.DailyTranctionStockData;
 import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
+import com.stockAPI.repository.BwibbuRepository;
 import com.stockAPI.repository.DailyTranctionStockDataRepository;
 import com.stockAPI.service.TWSIOpenService;
 import com.stockAPI.util.BaseUtil;
@@ -26,6 +28,9 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 	
 	@Autowired
 	DailyTranctionStockDataRepository dailyTranctionStockDataRepository;
+	
+	@Autowired
+	BwibbuRepository bwibbuRepository;
 	
 	public DailyTranctionStockData[] getDailyTranctionStockData(){
 		DailyTranctionStockData[] api_resultArray =
@@ -57,6 +62,22 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 				TWSIOpenAPIUrl.FINANCE_GENERAL_BALANCE_SHEET.getMethod(),
 				GeneralBalanceSheet[].class);
 		return	resultList;
+	}
+
+	@Override
+	public Bwibbu[] getDailyBwibbu() {
+		Bwibbu[] bwibbus
+			= TWSIOpenAPIUtil.send(
+					TWSIOpenAPIUrl.EXCHANGE_REPORT_BWIBBU_ALL.getUrl(), 
+					TWSIOpenAPIUrl.EXCHANGE_REPORT_BWIBBU_ALL.getMethod(),
+					Bwibbu[].class);
+		return bwibbus;
+	}
+
+	@Override
+	public void updateDailyBwibbu() {
+		Bwibbu[] bwibbus = getDailyBwibbu();
+		bwibbuRepository.insert(bwibbus);
 	}
 	
 	

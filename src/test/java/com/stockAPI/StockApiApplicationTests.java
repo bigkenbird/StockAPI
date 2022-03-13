@@ -48,10 +48,15 @@ public class StockApiApplicationTests {
 		GeneralBalanceSheet[]  resultList = tWSIOpenService.getGeneralBalanceSheet();
 		
 		}
-	@Test
+	
 	void LineNotify() {
 		FugleQuote result =fugleQuoteService.getRealTimeData("2884", true);
 		logger.info(result);
+	}
+	
+	@Test
+	void updateDailyBwibbu() {
+		tWSIOpenService.updateDailyBwibbu();
 	}
 	
 }

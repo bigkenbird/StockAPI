@@ -25,7 +25,7 @@ public class FugleQuoteServiceImpl implements FugleQuoteService {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		String url = 
 				UriComponentsBuilder.fromHttpUrl(fugleApi_quoteUrl)
-				.queryParam("symbolId", "2884")
+				.queryParam("symbolId", symbolId)
 				.queryParam("apiToken", fugleApi_token)
 				.encode()
 				.toUriString();
