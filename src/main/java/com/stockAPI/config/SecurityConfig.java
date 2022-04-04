@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http
     		.authorizeRequests()
-    		.antMatchers("/user/create").hasAuthority("ADMIN") //管理員可以新增使用者資料
+    		.antMatchers("/user/create").permitAll() //管理員可以新增使用者資料
     		.antMatchers("/user/login").permitAll()
     		.antMatchers("/user/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得用戶資料
     		.antMatchers("/stock/search/**").hasAnyAuthority("ADMIN","NORMAL") //取得股市資料

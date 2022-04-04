@@ -42,7 +42,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 	        String authority = (String) claims.get("authority");
 	        
 	        
-	        User user = new User(account,name,null,authority);
+	        User user = new User(account,name,authority);
 	        user.setId(user_id);
 	        StockUser stockUser =new StockUser(user);
 

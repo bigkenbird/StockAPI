@@ -16,7 +16,7 @@ public class BwibbuRepository {
 
 	public int[] insert(Bwibbu[] bwibbus) {
 		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch((Object[])bwibbus);
-		String sql = " INSERT INTO stockapi.bwibbu ( "
+		String sql = " INSERT INTO bwibbu ( "
 				   + " code, name, pe_ratio, dividend_yield, pb_ratio"
 				   + " ) "
 				   + " VALUES ( :code, :name, :pEratio, :dividendYield, :pBratio ) ";

@@ -23,19 +23,19 @@ public class StockUserServiceImpl implements StockUserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user= userRepository.getDataByAccount(username);
+		User user= userRepository.findByAccount(username);
 		return new StockUser(user);
 		
 	}
 	
 	public Integer addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		Integer user_id = userRepository.add(user);
+		Integer user_id = userRepository.save(user).getId();
 		return user_id;
 	}
 	
 	public StockUser getOwnData(String account){
-		User user= userRepository.getDataByAccount(account);
+		User user= userRepository.findByAccount(account);
 		
 		//資料內不可以含有密碼資訊
 		user.setPassword(null);
