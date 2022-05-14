@@ -15,6 +15,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class GeneralBalanceSheet {
 	
+	//一般業公發公司資產負債表
+	
 	@JsonAlias("出表日期")
 	private String release_date;
 	

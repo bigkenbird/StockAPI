@@ -36,7 +36,7 @@ public class User {
 	public User(String account, String name,String authority) {
 		this.account = account;
 		this.name=name;
-		this.authority=account;
+		this.authority=authority;
 		
 	}
 }

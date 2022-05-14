@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.stockAPI.model.DailyTranctionStockData;
+import com.stockAPI.model.financial_statement.DifferentBalanceSheet;
 import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
 import com.stockAPI.model.fugle_api.quote.FugleQuote;
 import com.stockAPI.service.FugleQuoteService;
@@ -44,10 +45,7 @@ public class StockApiApplicationTests {
 		}
 	}
 	
-	void getGeneralBalanceSheet() {
-		GeneralBalanceSheet[]  resultList = tWSIOpenService.getGeneralBalanceSheet();
-		
-		}
+	
 	
 	void LineNotify() {
 		FugleQuote result =fugleQuoteService.getRealTimeData("2884", true);
@@ -57,6 +55,19 @@ public class StockApiApplicationTests {
 	@Test
 	void updateDailyBwibbu() {
 		tWSIOpenService.updateDailyBwibbu();
+	}
+	
+	@Test
+	void getDifferentBalanceSheet() {
+		DifferentBalanceSheet[] differentBalanceSheets = tWSIOpenService.getDifferentBalanceSheet();
+		logger.info(differentBalanceSheets);
+
+	}
+	
+	@Test
+	void saveGeneralBalanceSheet(){
+		GeneralBalanceSheet[] generalBalanceSheetArray = tWSIOpenService.getGeneralBalanceSheet();
+		tWSIOpenService.saveGeneralBalanceSheet(generalBalanceSheetArray);
 	}
 	
 }

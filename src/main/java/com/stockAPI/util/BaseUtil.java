@@ -17,6 +17,10 @@ public class BaseUtil {
 		
 	}
 	
+	public static boolean checkArrayIsEmpty(Object[] source) {
+		return (source==null||source.length==0);
+	}
+	
 	 
 
 }

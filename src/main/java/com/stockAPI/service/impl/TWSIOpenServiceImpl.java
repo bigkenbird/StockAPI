@@ -1,6 +1,7 @@
 package com.stockAPI.service.impl;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -11,15 +12,22 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.stockAPI.assembler.GeneralBalanceSheetAssembler;
 import com.stockAPI.enumsave.TWSIOpenAPIUrl;
-import com.stockAPI.model.Bwibbu;
+import com.stockAPI.enumsave.TWSIOpenExceptionEnum;
+import com.stockAPI.exception.TWSIOpenSeviceException;
 import com.stockAPI.model.DailyTranctionStockData;
+import com.stockAPI.model.entity.Bwibbu;
+import com.stockAPI.model.entity.GeneralBalanceSheetEntity;
+import com.stockAPI.model.financial_statement.DifferentBalanceSheet;
 import com.stockAPI.model.financial_statement.GeneralBalanceSheet;
 import com.stockAPI.repository.BwibbuRepository;
 import com.stockAPI.repository.DailyTranctionStockDataRepository;
+import com.stockAPI.repository.GeneralBalanceSheetRepository;
 import com.stockAPI.service.TWSIOpenService;
 import com.stockAPI.util.BaseUtil;
 import com.stockAPI.util.TWSIOpenAPIUtil;
+
 
 @Service
 public class TWSIOpenServiceImpl implements TWSIOpenService{
@@ -31,6 +39,9 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 	
 	@Autowired
 	BwibbuRepository bwibbuRepository;
+	
+	@Autowired
+	GeneralBalanceSheetRepository generalBalanceSheetRepository;
 	
 	public DailyTranctionStockData[] getDailyTranctionStockData(){
 		DailyTranctionStockData[] api_resultArray =
@@ -61,6 +72,12 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 				TWSIOpenAPIUrl.FINANCE_GENERAL_BALANCE_SHEET.getUrl(),
 				TWSIOpenAPIUrl.FINANCE_GENERAL_BALANCE_SHEET.getMethod(),
 				GeneralBalanceSheet[].class);
+		if(BaseUtil.checkArrayIsEmpty(resultList)) {
+			throw new TWSIOpenSeviceException(
+					TWSIOpenExceptionEnum.FINANCE_GENERAL_BALANCE_SHEET_SEARCH_NO_DATA.getCode(),
+					TWSIOpenExceptionEnum.FINANCE_GENERAL_BALANCE_SHEET_SEARCH_NO_DATA.getMessage());
+		}
+			
 		return	resultList;
 	}
 
@@ -76,8 +93,38 @@ public class TWSIOpenServiceImpl implements TWSIOpenService{
 
 	@Override
 	public void updateDailyBwibbu() {
-		Bwibbu[] bwibbus = getDailyBwibbu();
-		bwibbuRepository.insert(bwibbus);
+		Bwibbu[] bwibbus_array = getDailyBwibbu();
+		List<Bwibbu> bwibbus_list =Arrays.asList(bwibbus_array);
+		bwibbuRepository.saveAll(bwibbus_list.subList(0, 10));
+	}
+
+	@Override
+	public DifferentBalanceSheet[] getDifferentBalanceSheet() {
+		DifferentBalanceSheet[] resultList =
+				TWSIOpenAPIUtil.send(
+						TWSIOpenAPIUrl.FINANCE_DIFFERENT_BALANCE_SHEET.getUrl(),
+						TWSIOpenAPIUrl.FINANCE_DIFFERENT_BALANCE_SHEET.getMethod(),
+						DifferentBalanceSheet[].class);
+		return	resultList;
+	}
+
+	@Override
+	public void saveGeneralBalanceSheet(GeneralBalanceSheet[] generalBalanceSheets) {
+	try {
+		 List<GeneralBalanceSheet> generalBalanceSheet_list = Arrays.asList(generalBalanceSheets);
+		 List<GeneralBalanceSheetEntity> generalBalanceSheetEntity_list =
+				 GeneralBalanceSheetAssembler.toEntity(generalBalanceSheet_list);
+		 
+		 
+		 generalBalanceSheetRepository.saveAll(generalBalanceSheetEntity_list);
+	}
+	catch (Exception e) {
+		logger.error("TWSIOpenServiceImpl saveGeneralBalanceSheet 發生錯誤,錯誤訊息：{}",e.getMessage());
+		throw new TWSIOpenSeviceException(
+				TWSIOpenExceptionEnum.FINANCE_GENERAL_BALANCE_SHEET_INSERT_FAIL.getCode(),
+				TWSIOpenExceptionEnum.FINANCE_GENERAL_BALANCE_SHEET_INSERT_FAIL.getMessage());
+	}
+	
 	}
 	
 	

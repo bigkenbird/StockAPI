@@ -9,7 +9,10 @@ public enum TWSIOpenAPIUrl {
 	EXCHANGE_REPORT_BWIBBU_ALL(2,"exchange_report",HttpMethod.GET,"https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL"),
 	
 	//財務報表
-	FINANCE_GENERAL_BALANCE_SHEET(1,"finance",HttpMethod.GET,"https://openapi.twse.com.tw/v1/opendata/t187ap07_X_ci");
+	FINANCE_GENERAL_BALANCE_SHEET(1,"finance",HttpMethod.GET,"https://openapi.twse.com.tw/v1/opendata/t187ap07_X_ci"),
+	FINANCE_DIFFERENT_BALANCE_SHEET(2,"finance",HttpMethod.GET,"https://openapi.twse.com.tw/v1/opendata/t187ap07_X_mim");
+
+	
 	
 	private  Integer id;
 	private String type;
