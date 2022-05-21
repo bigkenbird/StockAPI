@@ -9,11 +9,13 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name="users")
 @Data
 @NoArgsConstructor
+@ToString
 public class User {
 	
 	@Id
@@ -32,11 +34,12 @@ public class User {
 	
 	@Column(name="AUTHORITY")
 	private String authority;
-	
-	public User(String account, String name,String authority) {
+
+	public User(String account, String name, String password, String authority) {
+		super();
 		this.account = account;
-		this.name=name;
-		this.authority=authority;
-		
+		this.name = name;
+		this.password = password;
+		this.authority = authority;
 	}
 }

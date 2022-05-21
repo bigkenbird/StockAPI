@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.stockAPI.enumsave.TokenEnum;
+import com.stockAPI.exception.StockUserServiceException;
 import com.stockAPI.exception.TokenException;
 import com.stockAPI.model.APIReturnObject;
 
@@ -52,5 +53,12 @@ public class BaseHandler {
 		aPIReturnObject.setMessage(e.getMessage());
 		return new ResponseEntity<APIReturnObject>(aPIReturnObject, e.getHttpStatus());
 	}
-
+	// StockUserService業務邏輯錯誤
+	@ExceptionHandler(StockUserServiceException.class)
+	public ResponseEntity<APIReturnObject> stockUserServiceException(StockUserServiceException e) {
+		logger.error(e.getMessage());
+		APIReturnObject aPIReturnObject = new APIReturnObject();
+		aPIReturnObject.setMessage(e.getMessage());
+		return new ResponseEntity<APIReturnObject>(aPIReturnObject,HttpStatus.BAD_REQUEST);
+	}
 }
