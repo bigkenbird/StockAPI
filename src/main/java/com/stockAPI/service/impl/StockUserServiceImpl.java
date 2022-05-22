@@ -30,7 +30,7 @@ public class StockUserServiceImpl implements StockUserService {
 		return new StockUser(user);
 	}
 	
-	public Integer addUser(User user) {
+	public Integer addUser(User user){
 		vertifyUser(user);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setAuthority("NORMAL");
@@ -40,7 +40,6 @@ public class StockUserServiceImpl implements StockUserService {
 	
 	public StockUser getOwnData(String account){
 		User user= userRepository.findByAccount(account);
-		
 		//資料內不可以含有密碼資訊
 		user.setPassword(null);
 		return new StockUser(user);
@@ -60,8 +59,7 @@ public class StockUserServiceImpl implements StockUserService {
 			throw new StockUserServiceException(
 					StockUserServiceExceptionEnum.CREATE_USER_ACCOUNT_ILLEGAL.getCode(),
 					StockUserServiceExceptionEnum.CREATE_USER_ACCOUNT_ILLEGAL.getMessage()
-			);
-			
+			);			
 		}
 		else if(!StringUtils.hasText(name)) {
 			throw new StockUserServiceException(

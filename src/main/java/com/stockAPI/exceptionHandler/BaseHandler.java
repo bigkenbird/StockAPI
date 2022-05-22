@@ -56,7 +56,6 @@ public class BaseHandler {
 	// StockUserService業務邏輯錯誤
 	@ExceptionHandler(StockUserServiceException.class)
 	public ResponseEntity<APIReturnObject> stockUserServiceException(StockUserServiceException e) {
-		logger.error(e.getMessage());
 		APIReturnObject aPIReturnObject = new APIReturnObject();
 		aPIReturnObject.setMessage(e.getMessage());
 		return new ResponseEntity<APIReturnObject>(aPIReturnObject,HttpStatus.BAD_REQUEST);

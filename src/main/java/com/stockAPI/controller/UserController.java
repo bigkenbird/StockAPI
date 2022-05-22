@@ -65,7 +65,7 @@ public class UserController {
 	}
 	
 	@PostMapping("create")
-	public APIReturnObject create(@RequestBody User user) {
+	public APIReturnObject create(@RequestBody User user){
 		APIReturnObject result = new APIReturnObject();
 		Map<String, Object> data = new HashMap<String, Object>();
 		Integer user_id = stockUserService.addUser(user);

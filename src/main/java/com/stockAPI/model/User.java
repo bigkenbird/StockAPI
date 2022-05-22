@@ -15,7 +15,6 @@ import lombok.ToString;
 @Table(name="users")
 @Data
 @NoArgsConstructor
-@ToString
 public class User {
 	
 	@Id
